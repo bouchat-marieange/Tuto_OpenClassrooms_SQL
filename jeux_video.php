@@ -113,19 +113,41 @@
 
 //Voici le code comptet avec le test isset pour vérifier que le paramètre console a bien été transmis.
 
-if (isset($_GET["console"])) // isset = est-ce que la variable existe? Alors j'exécute tout mon code
-{
-  $bdd = new PDO('mysql:host=localhost;dbname=Tuto_OpenClassrooms', 'root', 'user', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-  $requete = $bdd->prepare('SELECT * FROM jeux_video WHERE console= ?');
-  $requete->execute(array($_GET['console']));
-  while ($donnees = $requete->fetch()) // Cette fois, attention, on fait un fetch sur la requete qui vient d'être exécutée et non sur la reponse !!!
-  {
-    echo '<p>'. $donnees['console']. ' - '. $donnees['nom']. ' - '. $donnees['prix']. 'euros</p>';
-  }
-}
-else // si la variable console n'a pas été transmise alors j'affiche un message d'erreur.
-{
-  echo "<p>La console désirée n'a pas été renseignée! </p>";
-}
+// if (isset($_GET["console"])) // isset = est-ce que la variable existe? Alors j'exécute tout mon code
+// {
+//   $bdd = new PDO('mysql:host=localhost;dbname=Tuto_OpenClassrooms', 'root', 'user', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+//   $requete = $bdd->prepare('SELECT * FROM jeux_video WHERE console= ?');
+//   $requete->execute(array($_GET['console']));
+//   while ($donnees = $requete->fetch()) // Cette fois, attention, on fait un fetch sur la requete qui vient d'être exécutée et non sur la reponse !!!
+//   {
+//     echo '<p>'. $donnees['console']. ' - '. $donnees['nom']. ' - '. $donnees['prix']. 'euros</p>';
+//   }
+// }
+// else // si la variable console n'a pas été transmise alors j'affiche un message d'erreur.
+// {
+//   echo "<p>La console désirée n'a pas été renseignée! </p>";
+// }
+
+
+//Exemple avec multiple requête SQL cumulées
+
+// try
+// {
+// 	$bdd = new PDO('mysql:host=localhost;dbname=Tuto_OpenClassrooms;charset=utf8', 'root', 'user');
+// }
+// catch(Exception $e)
+// {
+//         die('Erreur : '.$e->getMessage());
+// }
+//
+// $reponse = $bdd->query("SELECT nom, possesseur, console, prix FROM jeux_video WHERE console='Xbox' OR console='PS2' ORDER BY prix DESC LIMIT 0,10");
+//
+// echo '<p>Voici les 10 premières entrées de la table jeux_video :</p>';
+// while ($donnees = $reponse->fetch())
+// {
+// 	echo $donnees['nom'] . ' - ' .$donnees['prix'].' euros <br />';
+// }
+//
+// $reponse->closeCursor();
 
  ?>
